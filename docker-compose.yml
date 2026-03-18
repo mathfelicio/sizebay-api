@@ -1,0 +1,43 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: sizebay-api-app
+    depends_on:
+      - mongo
+    environment:
+      MONGO_AUTH_SOURCE: admin
+      MONGO_DATABASE: sizebay
+      MONGO_HOST: mongo
+      MONGO_PASSWORD: root
+      MONGO_PORT: 27017
+      MONGO_URL: mongodb://root:root@mongo:27017/sizebay?authSource=admin
+      MONGO_USERNAME: root
+      NODE_ENV: development
+      PORT: 3050
+    volumes:
+      - ./package.json:/api/package.json
+      - ./nest-cli.json:/api/nest-cli.json
+      - ./src:/api/src
+      - ./tsconfig.json:/api/tsconfig.json
+      - ./node_modules:/api/node_modules
+    ports:
+      - "3050:3050"
+    command: yarn dev
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    container_name: sizebay-api-mongo
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_DATABASE: sizebay
+    ports:
+      - "27097:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
