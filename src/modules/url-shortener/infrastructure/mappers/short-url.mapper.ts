@@ -1,26 +1,25 @@
-import { ObjectId } from "mongodb";
 import { ShortUrl } from "../../domain/entities/short-url.entity.js";
-import { ShortUrlMongoEntity } from "../entities/short-url.mongoEntity.js";
+import { ShortUrlEntity } from "../entities/short-url.entity.js";
 
 export class ShortUrlMapper {
-  static toMongoEntity(shortUrl: ShortUrl): ShortUrlMongoEntity {
-    const mongoEntity = new ShortUrlMongoEntity();
+  static toPostgresEntity(shortUrl: ShortUrl): ShortUrlEntity {
+    const postgresEntity = new ShortUrlEntity();
 
     if (shortUrl.id) {
-      mongoEntity._id = new ObjectId(shortUrl.id);
+      postgresEntity.id = shortUrl.id;
     }
 
-    mongoEntity.code = shortUrl.code;
-    mongoEntity.originalUrl = shortUrl.originalUrl;
-    mongoEntity.shortUrl = shortUrl.shortUrl;
-    mongoEntity.createdAt = shortUrl.createdAt;
+    postgresEntity.code = shortUrl.code;
+    postgresEntity.originalUrl = shortUrl.originalUrl;
+    postgresEntity.shortUrl = shortUrl.shortUrl;
+    postgresEntity.createdAt = shortUrl.createdAt;
 
-    return mongoEntity;
+    return postgresEntity;
   }
 
-  static toDomain(shortUrl: ShortUrlMongoEntity): ShortUrl {
+  static toDomain(shortUrl: ShortUrlEntity): ShortUrl {
     return ShortUrl.rehydrate({
-      id: shortUrl._id?.toHexString() ?? null,
+      id: shortUrl.id ?? null,
       code: shortUrl.code,
       originalUrl: shortUrl.originalUrl,
       shortUrl: shortUrl.shortUrl,
