@@ -4,4 +4,5 @@ export interface ShortUrlProps {
   originalUrl: string;
   shortUrl: string;
   createdAt: Date;
+  updatedAt: Date | null;
 }
