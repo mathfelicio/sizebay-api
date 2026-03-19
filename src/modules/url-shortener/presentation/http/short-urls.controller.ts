@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  NotFoundException,
   Param,
   Post,
   Put,
@@ -26,7 +25,7 @@ export class ShortUrlsController {
     private readonly getShortUrlUseCase: GetShortUrlUseCase,
     private readonly updateShortUrlUseCase: UpdateShortUrlUseCase,
     private readonly deleteShortUrlUseCase: DeleteShortUrlUseCase,
-  ) {}
+  ) { }
 
   @Post()
   @ApiOperation({ summary: "Criar uma nova URL encurtada" })
@@ -38,21 +37,18 @@ export class ShortUrlsController {
   }
 
   @Get(":code")
-  @ApiOperation({ summary: "Obter a URL original a partir do código encurtado" })
+  @ApiOperation({ summary: "Obtém a URL original a partir do código encurtado" })
   @ApiResponse({ status: 200, description: "Retorna os detalhes da URL encurtada", type: ShortUrlPresenter })
   @ApiResponse({ status: 404, description: "URL encurtada não encontrada" })
   async findOne(@Param("code") code: string) {
     const shortUrl = await this.getShortUrlUseCase.execute(code);
 
-    if (!shortUrl) {
-      throw new NotFoundException("Short URL not found");
-    }
 
     return ShortUrlPresenter.toHttp(shortUrl);
   }
 
   @Put(":code")
-  @ApiOperation({ summary: "Atualizar a URL original de um código encurtado" })
+  @ApiOperation({ summary: "Atualiza a URL original de um código encurtado" })
   @ApiResponse({ status: 200, description: "Retorna os detalhes atualizados da URL encurtada", type: ShortUrlPresenter })
   @ApiResponse({ status: 404, description: "URL encurtada não encontrada" })
   async update(
@@ -66,7 +62,7 @@ export class ShortUrlsController {
 
   @Delete(":code")
   @HttpCode(204)
-  @ApiOperation({ summary: "Excluir um código encurtado" })
+  @ApiOperation({ summary: "Exclui um código encurtado" })
   @ApiResponse({ status: 204, description: "URL encurtada excluída com sucesso" })
   @ApiResponse({ status: 404, description: "URL encurtada não encontrada" })
   async remove(@Param("code") code: string) {
