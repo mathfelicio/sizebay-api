@@ -1,6 +1,6 @@
 import { Controller, Get, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { mongoOrmConfig } from "./database/config/mongo-orm.config.js";
+import { postgresOrmDataSource } from "./database/config/postgres-orm.config.js";
 import { UrlShortenerModule } from "./modules/url-shortener/url-shortener.module.js";
 
 @Controller()
@@ -13,10 +13,7 @@ class AppController {
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      ...mongoOrmConfig,
-      name: "mongodb",
-    }),
+    TypeOrmModule.forRoot(postgresOrmDataSource.options),
     UrlShortenerModule,
   ],
   controllers: [AppController],

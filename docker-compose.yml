@@ -4,15 +4,13 @@ services:
       context: .
     container_name: sizebay-api-app
     depends_on:
-      - mongo
+      - postgres
     environment:
-      MONGO_AUTH_SOURCE: admin
-      MONGO_DATABASE: sizebay
-      MONGO_HOST: mongo
-      MONGO_PASSWORD: root
-      MONGO_PORT: 27017
-      MONGO_URL: mongodb://root:root@mongo:27017/sizebay?authSource=admin
-      MONGO_USERNAME: root
+      POSTGRES_DB: sizebay
+      POSTGRES_HOST: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: root
       NODE_ENV: development
       PORT: 3050
     volumes:
@@ -20,24 +18,23 @@ services:
       - ./nest-cli.json:/api/nest-cli.json
       - ./src:/api/src
       - ./tsconfig.json:/api/tsconfig.json
-      - ./node_modules:/api/node_modules
     ports:
       - "3050:3050"
     command: yarn dev
     restart: unless-stopped
 
-  mongo:
-    image: mongo:7
-    container_name: sizebay-api-mongo
+  postgres:
+    image: postgres:16-alpine
+    container_name: sizebay-api-postgres
     environment:
-      MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_DATABASE: sizebay
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: sizebay
     ports:
-      - "27097:27017"
+      - "5438:5432"
     volumes:
-      - mongo_data:/data/db
+      - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
 volumes:
-  mongo_data:
+  postgres_data:
