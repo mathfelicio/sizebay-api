@@ -6,7 +6,7 @@ import {
 } from "../../domain/repositories/short-url.repository.js";
 import { ShortUrl } from "../../domain/entities/short-url.entity.js";
 import { ShortUrlBuilder } from "../builders/short-url.builder.js";
-import { ShortUrlCodeException } from "../../domain/exceptions/short-url-code.exception.js";
+import { ShortUrlCodeCreateException } from "../../domain/exceptions/short-url-code-create.exception.js";
 
 @Injectable()
 export class CreateShortUrlUseCase {
@@ -34,7 +34,7 @@ export class CreateShortUrlUseCase {
 
       return await this.shortUrlRepository.save(shortUrl);
     } catch (err) {
-      throw new ShortUrlCodeException();
+      throw new ShortUrlCodeCreateException();
     }
   }
 }
