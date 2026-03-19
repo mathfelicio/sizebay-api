@@ -5,4 +5,6 @@ export const SHORT_URL_REPOSITORY = Symbol("SHORT_URL_REPOSITORY");
 export interface ShortUrlRepository {
   save(shortUrl: ShortUrl): Promise<ShortUrl>;
   findByCode(code: string): Promise<ShortUrl | null>;
+  findByOriginalUrl(originalUrl: string): Promise<ShortUrl | null>;
+  delete(code: string): Promise<void>;
 }
