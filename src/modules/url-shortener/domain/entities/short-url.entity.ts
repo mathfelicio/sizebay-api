@@ -5,15 +5,22 @@ export class ShortUrl {
   private constructor(
     public readonly id: string | null,
     public readonly code: string,
-    public readonly originalUrl: string,
+    public originalUrl: string,
     public readonly shortUrl: string,
     public readonly createdAt: Date,
+    public updatedAt: Date | null,
   ) {
     ShortUrlValidator.validate(this);
   }
 
+  updateOriginalUrl(newUrl: string): void {
+    this.originalUrl = newUrl;
+    this.updatedAt = new Date();
+    ShortUrlValidator.validate(this);
+  }
+
   static create(
-    props: Omit<ShortUrlProps, "id" | "createdAt"> & { id?: string | null },
+    props: Omit<ShortUrlProps, "id" | "createdAt" | "updatedAt"> & { id?: string | null },
   ): ShortUrl {
     return new ShortUrl(
       props.id ?? null,
@@ -21,6 +28,7 @@ export class ShortUrl {
       props.originalUrl,
       props.shortUrl,
       new Date(),
+      null,
     );
   }
 
@@ -31,6 +39,7 @@ export class ShortUrl {
       props.originalUrl,
       props.shortUrl,
       props.createdAt,
+      props.updatedAt,
     );
   }
 }

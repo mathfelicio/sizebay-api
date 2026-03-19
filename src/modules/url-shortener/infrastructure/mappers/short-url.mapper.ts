@@ -13,6 +13,7 @@ export class ShortUrlMapper {
     postgresEntity.originalUrl = shortUrl.originalUrl;
     postgresEntity.shortUrl = shortUrl.shortUrl;
     postgresEntity.createdAt = shortUrl.createdAt;
+    postgresEntity.updatedAt = shortUrl.updatedAt;
 
     return postgresEntity;
   }
@@ -24,6 +25,7 @@ export class ShortUrlMapper {
       originalUrl: shortUrl.originalUrl,
       shortUrl: shortUrl.shortUrl,
       createdAt: shortUrl.createdAt,
+      updatedAt: shortUrl.updatedAt,
     });
   }
 }

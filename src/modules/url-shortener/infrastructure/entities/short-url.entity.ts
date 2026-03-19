@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("short_urls")
 export class ShortUrlEntity {
@@ -8,12 +8,15 @@ export class ShortUrlEntity {
   @Column({ unique: true })
   code!: string;
 
-  @Column()
+  @Column({ name: "original_url" })
   originalUrl!: string;
 
-  @Column()
+  @Column({ name: "short_url" })
   shortUrl!: string;
 
-  @Column()
+  @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
+
+  @UpdateDateColumn({ name: "updated_at", nullable: true })
+  updatedAt!: Date | null;
 }
