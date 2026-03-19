@@ -3,6 +3,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ShortUrlBuilder } from "./application/builders/short-url.builder.js";
 import { CreateShortUrlUseCase } from "./application/use-cases/create-short-url.use-case.js";
 import { GetShortUrlUseCase } from "./application/use-cases/get-short-url.use-case.js";
+import { UpdateShortUrlUseCase } from "./application/use-cases/update-short-url.use-case.js";
+import { DeleteShortUrlUseCase } from "./application/use-cases/delete-short-url.use-case.js";
 import { SHORT_URL_REPOSITORY } from "./domain/repositories/short-url.repository.js";
 import { ShortUrlEntity } from "./infrastructure/entities/short-url.entity.js";
 import { ShortUrlPostgresRepository } from "./infrastructure/repositories/short-url-postgres.repository.js";
@@ -15,6 +17,8 @@ import { ShortUrlsController } from "./presentation/http/short-urls.controller.j
     ShortUrlBuilder,
     CreateShortUrlUseCase,
     GetShortUrlUseCase,
+    UpdateShortUrlUseCase,
+    DeleteShortUrlUseCase,
     ShortUrlPostgresRepository,
     {
       provide: SHORT_URL_REPOSITORY,
