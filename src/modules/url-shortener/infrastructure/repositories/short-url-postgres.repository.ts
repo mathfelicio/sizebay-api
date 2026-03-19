@@ -29,4 +29,18 @@ export class ShortUrlPostgresRepository implements ShortUrlRepository {
 
     return shortUrl ? ShortUrlMapper.toDomain(shortUrl) : null;
   }
+
+  async findByOriginalUrl(originalUrl: string): Promise<ShortUrl | null> {
+    const shortUrl = await this.repository.findOne({
+      where: {
+        originalUrl,
+      },
+    });
+
+    return shortUrl ? ShortUrlMapper.toDomain(shortUrl) : null;
+  }
+
+  async delete(code: string): Promise<void> {
+    await this.repository.delete({ code });
+  }
 }
