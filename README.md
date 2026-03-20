@@ -235,7 +235,7 @@ src/
 
 ```mermaid
 erDiagram
-    short_urls ||o--o| shorten_url_stats : "has stats"
+    short_urls ||--o| shorten_url_stats : "has stats"
 
     short_urls {
         uuid id PK
