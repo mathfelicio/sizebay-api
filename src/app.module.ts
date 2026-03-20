@@ -1,24 +1,17 @@
-import { Controller, Get, Module } from "@nestjs/common";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { postgresOrmDataSource } from "./database/config/postgres-orm.config.js";
 import { UrlShortenerModule } from "./modules/url-shortener/url-shortener.module.js";
-
-@ApiTags("Saúde")
-@Controller()
-class AppController {
-  @Get("health")
-  @ApiOperation({ summary: "Verificar status da API" })
-  health() {
-    return { status: "ok" };
-  }
-}
+import { UrlStatsModule } from "./modules/url-stats/url-stats.module.js";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(postgresOrmDataSource.options),
+    TypeOrmModule.forRoot({
+      ...postgresOrmDataSource.options,
+      autoLoadEntities: true,
+    }),
     UrlShortenerModule,
+    UrlStatsModule,
   ],
-  controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule { }
