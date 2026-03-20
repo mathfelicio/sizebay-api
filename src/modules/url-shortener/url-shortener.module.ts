@@ -6,12 +6,12 @@ import { GetShortUrlUseCase } from "./application/use-cases/get-short-url.use-ca
 import { UpdateShortUrlUseCase } from "./application/use-cases/update-short-url.use-case.js";
 import { DeleteShortUrlUseCase } from "./application/use-cases/delete-short-url.use-case.js";
 import { SHORT_URL_REPOSITORY } from "./domain/repositories/short-url.repository.js";
-import { ShortUrlEntity } from "./infrastructure/entities/short-url.entity.js";
+import { ShortUrlOrmEntity } from "./infrastructure/entities/short-url-orm.entity";
 import { ShortUrlPostgresRepository } from "./infrastructure/repositories/short-url-postgres.repository.js";
 import { ShortUrlsController } from "./presentation/http/short-urls.controller.js";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ShortUrlEntity])],
+  imports: [TypeOrmModule.forFeature([ShortUrlOrmEntity])],
   controllers: [ShortUrlsController],
   providers: [
     ShortUrlBuilder,
@@ -25,6 +25,6 @@ import { ShortUrlsController } from "./presentation/http/short-urls.controller.j
       useClass: ShortUrlPostgresRepository,
     },
   ],
-  exports: [SHORT_URL_REPOSITORY, ShortUrlPostgresRepository],
+  exports: [SHORT_URL_REPOSITORY, ShortUrlPostgresRepository, TypeOrmModule],
 })
 export class UrlShortenerModule {}

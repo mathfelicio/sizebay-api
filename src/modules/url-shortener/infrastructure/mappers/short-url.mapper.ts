@@ -1,9 +1,9 @@
 import { ShortUrl } from "../../domain/entities/short-url.entity.js";
-import { ShortUrlEntity } from "../entities/short-url.entity.js";
+import { ShortUrlOrmEntity } from "../entities/short-url-orm.entity";
 
 export class ShortUrlMapper {
-  static toPostgresEntity(shortUrl: ShortUrl): ShortUrlEntity {
-    const postgresEntity = new ShortUrlEntity();
+  static toPostgresEntity(shortUrl: ShortUrl): ShortUrlOrmEntity {
+    const postgresEntity = new ShortUrlOrmEntity();
 
     if (shortUrl.id) {
       postgresEntity.id = shortUrl.id;
@@ -18,7 +18,7 @@ export class ShortUrlMapper {
     return postgresEntity;
   }
 
-  static toDomain(shortUrl: ShortUrlEntity): ShortUrl {
+  static toDomain(shortUrl: ShortUrlOrmEntity): ShortUrl {
     return ShortUrl.rehydrate({
       id: shortUrl.id ?? null,
       code: shortUrl.code,

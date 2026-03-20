@@ -3,14 +3,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ShortUrl } from "../../domain/entities/short-url.entity.js";
 import { ShortUrlRepository } from "../../domain/repositories/short-url.repository.js";
-import { ShortUrlEntity } from "../entities/short-url.entity.js";
+import { ShortUrlOrmEntity } from "../entities/short-url-orm.entity";
 import { ShortUrlMapper } from "../mappers/short-url.mapper.js";
 
 @Injectable()
 export class ShortUrlPostgresRepository implements ShortUrlRepository {
   constructor(
-    @InjectRepository(ShortUrlEntity)
-    private readonly repository: Repository<ShortUrlEntity>,
+    @InjectRepository(ShortUrlOrmEntity)
+    private readonly repository: Repository<ShortUrlOrmEntity>,
   ) {}
 
   async save(shortUrl: ShortUrl): Promise<ShortUrl> {
